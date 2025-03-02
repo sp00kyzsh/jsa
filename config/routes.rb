@@ -1,10 +1,20 @@
 Rails.application.routes.draw do
-  resources :employees
+  resources :employees do
+    resources :employee_time_logs, only: [:create, :update, :edit] do
+      member do
+        patch :clock_out
+      end
+    end
+  end
+  
+  
   resources :jsas do
     member do
       get :pdf
     end
   end
+
+  get 'clock_in', to: 'employee_time_logs#clock_in_page'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

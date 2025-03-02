@@ -25,9 +25,49 @@
     </div>
   </div>
 
+  <div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <h5 class="card-title border-bottom pb-2">Work History</h5>
+    <table class="table">
+      <thead class="table-light">
+        <tr>
+          <th>Clock-In</th>
+          <th>Clock-Out</th>
+          <th>Duration (mins)</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @employee.employee_time_logs.each do |log| %>
+          <tr>
+            <td><%= log.clock_in.strftime("%I:%M %p") %></td>
+            <td><%= log.clock_out ? log.clock_out.strftime("%I:%M %p") : "Still Clocked In" %></td>
+            <td><%= log.duration || "Ongoing" %></td>
+            <td>
+              <%= link_to "Edit", edit_employee_employee_time_log_path(@employee, log), class: "btn btn-sm btn-warning" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+  <div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <h5 class="card-title border-bottom pb-2">Total Hours Worked</h5>
+    <p class="fw-bold"><%= @employee.total_hours_worked.round(2) %> hours</p>
+  </div>
+</div>
+
+
   <div class="d-flex justify-content-between">
     <%= link_to "Edit", edit_employee_path(@employee), class: "btn btn-warning" %>
     <%= link_to "Back", employees_path, class: "btn btn-secondary" %>
     <%= button_to "Delete", @employee, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
   </div>
 </div>
+
+
+

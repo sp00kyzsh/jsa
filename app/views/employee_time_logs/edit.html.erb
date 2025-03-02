@@ -1,0 +1,26 @@
+<div class="container mt-4">
+  <h1 class="mb-3 text-center">Edit Time Log</h1>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="card-title border-bottom pb-2">Modify Time Entry for <%= @employee.first_name %> <%= @employee.last_name %></h5>
+
+      <%= form_with(model: [@employee, @time_log], local: true) do |form| %>
+        <div class="mb-3">
+          <%= form.label :clock_in, "Clock In Time" %>
+          <%= form.datetime_local_field :clock_in, class: "form-control" %>
+        </div>
+
+        <div class="mb-3">
+          <%= form.label :clock_out, "Clock Out Time" %>
+          <%= form.datetime_local_field :clock_out, class: "form-control" %>
+        </div>
+
+        <div class="d-flex justify-content-between">
+          <%= link_to "Cancel", employee_path(@employee), class: "btn btn-secondary" %>
+          <%= form.submit "Update", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_02_092830) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_02_115803) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "employee_time_logs", force: :cascade do |t|
+    t.bigint "employee_id", null: false
+    t.datetime "clock_in"
+    t.datetime "clock_out"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["employee_id"], name: "index_employee_time_logs_on_employee_id"
+  end
 
   create_table "employees", force: :cascade do |t|
     t.string "first_name"
@@ -59,4 +68,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_02_092830) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "time_logs", force: :cascade do |t|
+    t.bigint "employee_id", null: false
+    t.datetime "clock_in"
+    t.datetime "clock_out"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["employee_id"], name: "index_time_logs_on_employee_id"
+  end
+
+  add_foreign_key "employee_time_logs", "employees"
+  add_foreign_key "time_logs", "employees"
 end
