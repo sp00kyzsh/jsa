@@ -1,0 +1,140 @@
+<%= form_with(model: jsa, local: true) do |form| %>
+  <div class="container mt-4">
+    
+    <!-- Job Information -->
+    <%= render 'shared/form_card', title: "Job Information", columns: 4, fields: [
+      { name: :job_description, label: "Job Description" },
+      { name: :date, label: "Date", type: "date" },
+      { name: :location, label: "Location" },
+      { name: :facilitator, label: "Facilitator/Leader" }
+    ], form: form %>
+
+    <!-- Team Information -->
+    <%= render 'shared/form_card', title: "Team Information", fields: [
+      { name: :marathon_rep, label: "Marathon Rep" },
+      { name: :safety_rep, label: "Safety Dept. Rep" },
+      { name: :work_crew_supervisor, label: "Work Crew Supervisor" }
+    ], form: form %>
+
+    <!-- Job Details -->
+    <%= render 'shared/form_card', title: "Job Details", fields: [
+      { name: :critical_steps, label: "Critical Job Steps/Sequence", type: "textarea" },
+      { name: :potential_hazards, label: "Potential Accidents or Hazards", type: "textarea" },
+      { name: :safety_measures, label: "Safety Measure to Address Hazards", type: "textarea" },
+      { name: :procedures_reviewed, label: "Procedures Reviewed", type: "textarea" },
+      { name: :worst_case, label: "Worst Case Scenario", type: "textarea" },
+      { name: :special_tools, label: "Special Tools/Equipment/PPE", type: "textarea" }
+    ], form: form %>
+
+    <!-- Checkbox Sections -->
+    <div class="row">
+      <%= render 'shared/checkbox_card', title: "Potential Hazard Key", name: "potential_hazard_key", 
+        options: ['Abrasion/cut/penetration', 'Access/Egress', 'Body Position', 'Burn', 'Caught Between/Stuck',
+          'Close/Tight/Congested Area', 'Compression/Roll Over', 'Electrical/Shock/Explosive', 'Toxic Atmosphere',
+          'Footing/Open Hole/Flooring', 'Flying/Foreign Particles', 'Heavy/Bulky/Awkward', 'Impact from Falling Objects',
+          'Incline/Slope/Uneven', 'Inhalation', 'Kickback/Torque', 'Line of Fire', 'Moving Equipment', 'High Noise',
+          'Overexertion/Heat/Cold', 'Pinch Points', 'Rotating Equipment', 'Sharp Metal/Edges', 'Head Knocker',
+          'Slip-Trip-Fall', 'Splash/Spill', 'Strain/Sprain', 'Suspended/Swinging Load', 'Visibility/Lighting',
+          'Situational Awareness', 'Stored Energy', 'Unexpected Movement', 'Weather', 'Blast Zone', 'Engulfment'],
+        jsa: @jsa, columns: 4 %>
+
+      <%= render 'shared/checkbox_card', title: "Required PPE for Job", name: "required_ppe",
+        options: ['Hard Hat', 'Face Shield', 'Goggles', 'Safety Glasses', 'Ear Protection', 'Dust Mask', 'Chemical Mask',
+          'Long Sleeves', 'Fire Retardant Clothing', 'Leather Gloves', 'Chemical Resistant Gloves',
+          'Chemical Resistant Apron', 'Harness', 'Steel Toe Boots', 'Other'],
+        jsa: @jsa, columns: 3 %>
+
+      <%= render 'shared/checkbox_card', title: "Required Protection Key", name: "required_protection_key",
+        options: ['Authorization to Work Permit', 'Barricade/Guard Rail/Protective Cover', 'Correct Tools for the Job',
+          'Cover floor grating to prevent Falling Objects', 'Fire Watch w/ Fire Extinguisher-Water Hose',
+          'Fire Retardant Clothing FRC', 'Full Body Harness', 'SDS', 'Overhead Falling Object Protection',
+          'Personal Hygiene: Hand Wash Station/Shower', 'Personal Monitor', 'Proper Posture',
+          'Safe Work Procedure', 'Respirator', 'Safety Signs/Tags/Caution Tape', 'Tool Lanyards', 'Cones',
+          'Water Station/Covered Break Area'],
+        jsa: @jsa, columns: 4 %>
+    </div>
+
+    <!-- Additional Information -->
+    <div class="row g-3">
+  <div class="col-md-3">
+    <%= render 'shared/checkbox_card', title: "Body Part Key", name: "body_part_key",
+      options: ['Head', 'Face', 'Eyes', 'Ears', 'Neck', 'Lungs', 'Chest', 'Back', 'Arms', 'Hands', 'Fingers', 'Legs', 'Ankles', 'Toes', 'Body'],
+      jsa: @jsa, columns: 2 %>
+  </div>
+
+  <div class="col-md-3">
+    <%= render 'shared/checkbox_card', title: "Training Required", name: "training_required",
+      options: ['Confined Space', 'Fire Watch', 'Hand/Power Tool', 'Respiratory'],
+      jsa: @jsa, columns: 1 %>
+  </div>
+
+  <div class="col-md-3">
+    <%= render 'shared/checkbox_card', title: "Mobile Equipment", name: "mobile_equipment",
+      options: ['Boom Lift', 'Back Hoe', 'Skid Steer', 'Lawn Mower', 'Brush Mower', 'Power Rake', 'Aerator'],
+      jsa: @jsa, columns: 1 %>
+  </div>
+
+  <div class="col-md-3">
+    <%= render 'shared/checkbox_card', title: "Other Inspections", name: "other_inspections",
+      options: ['Lift Plan?', 'Tool/Equip. Inspection?', 'Emergency Evac. Plan'],
+      jsa: @jsa, columns: 1 %>
+  </div>
+</div>
+
+<div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <h5 class="card-title border-bottom pb-2">Supervision Audit Review</h5>
+
+    <!-- Row 1: Employee Details -->
+    <div class="row">
+      <div class="col-md-3 mb-3">
+        <%= form.label :employee_name, "Employee Name" %>
+        <%= form.text_field :employee_name, class: "form-control" %>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <%= form.label :initials, "Initials" %>
+        <%= form.text_field :initials, class: "form-control" %>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <%= form.label :submission_date, "Submission Date" %>
+        <%= form.date_field :submission_date, class: "form-control" %>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <%= form.label :submission_time, "Submission Time" %>
+        <%= form.time_field :submission_time, class: "form-control" %>
+      </div>
+    </div>
+
+    <!-- Row 2: Signatures & Dates -->
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <%= form.label :foreman_signature, "Foreman Signature" %>
+        <%= form.text_field :foreman_signature, class: "form-control" %>
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <%= form.label :operations_signature, "Operations Signature" %>
+        <%= form.text_field :operations_signature, class: "form-control" %>
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <%= form.label :safety_rep_signature, "Safety Rep Signature" %>
+        <%= form.text_field :safety_rep_signature, class: "form-control" %>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+    <!-- Submit Button -->
+    <div class="mb-3">
+      <%= form.submit "Save JSA", class: "btn btn-primary" %>
+    </div>
+
+  </div> <!-- End Container -->
+<% end %>

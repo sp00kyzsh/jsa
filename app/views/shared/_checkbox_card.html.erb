@@ -1,0 +1,19 @@
+<div class="col-md-12">
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="card-title border-bottom pb-2"><%= title %></h5>
+      <div class="row">
+        <% options.in_groups_of(columns, false).each do |group| %>
+          <div class="col-md-<%= 12 / columns %>">
+            <% group.each do |option| %>
+              <div class="form-check">
+                <%= check_box_tag "jsa[#{name}][]", option, jsa[name]&.include?(option), id: "#{name}_#{option.parameterize}", class: "form-check-input" %>
+                <%= label_tag "#{name}_#{option.parameterize}", option, class: "form-check-label" %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  job_description: MyString
+  date: 2025-02-28
+  location: MyString
+  facilitator: MyString
+  marathon_rep: MyString
+  safety_rep: MyString
+  work_crew_supervisor: MyString
+  critical_steps: MyText
+  potential_hazards: MyText
+  safety_measures: MyText
+  procedures_reviewed: MyText
+  worst_case: MyText
+  special_tools: MyText
+  employee_name: MyString
+  initials: MyString
+  submission_date: 2025-02-28
+  submission_time: 2025-02-28 23:33:30
+
+two:
+  job_description: MyString
+  date: 2025-02-28
+  location: MyString
+  facilitator: MyString
+  marathon_rep: MyString
+  safety_rep: MyString
+  work_crew_supervisor: MyString
+  critical_steps: MyText
+  potential_hazards: MyText
+  safety_measures: MyText
+  procedures_reviewed: MyText
+  worst_case: MyText
+  special_tools: MyText
+  employee_name: MyString
+  initials: MyString
+  submission_date: 2025-02-28
+  submission_time: 2025-02-28 23:33:30

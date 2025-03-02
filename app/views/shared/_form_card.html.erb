@@ -1,0 +1,13 @@
+<div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <h5 class="card-title border-bottom pb-2"><%= title %></h5>
+    <div class="row">
+      <% fields.each do |field| %>
+        <div class="col-md-<%= 12 / (defined?(columns) ? columns : 3) %> mb-3">
+          <%= form.label field[:name], field[:label] %>
+          <%= field[:type] == "textarea" ? form.text_area(field[:name], class: "form-control") : form.text_field(field[:name], class: "form-control") %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

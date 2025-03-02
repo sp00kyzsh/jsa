@@ -1,0 +1,222 @@
+<div class="container mt-4">
+  <h1 class="mb-3 text-center">Job Safety Analysis (JSA)</h1>
+
+  <!-- Job Info Card -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="card-title border-bottom pb-2">Job Information</h5>
+      <div class="row">
+        <div class="col-md-3"><strong>Job Description:</strong> <%= @jsa.job_description %></div>
+        <div class="col-md-3"><strong>Date:</strong> <%= @jsa.date %></div>
+        <div class="col-md-3"><strong>Location:</strong> <%= @jsa.location %></div>
+        <div class="col-md-3"><strong>Facilitator:</strong> <%= @jsa.facilitator %></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Team Card -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="card-title border-bottom pb-2">Team Information</h5>
+      <div class="row">
+        <div class="col-md-4"><strong>Marathon Representative:</strong> <%= @jsa.marathon_rep %></div>
+        <div class="col-md-4"><strong>Safety Dept. Rep:</strong> <%= @jsa.safety_rep %></div>
+        <div class="col-md-4"><strong>Work Crew Supervisor:</strong> <%= @jsa.work_crew_supervisor %></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Job Details Card -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="card-title border-bottom pb-2">Job Details</h5>
+      <div class="row">
+        <div class="col-md-4"><strong>Critical Job Steps:</strong> <%= @jsa.critical_steps %></div>
+        <div class="col-md-4"><strong>Potential Hazards:</strong> <%= @jsa.potential_hazards %></div>
+        <div class="col-md-4"><strong>Safety Measures:</strong> <%= @jsa.safety_measures %></div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md-4"><strong>Procedures Reviewed:</strong> <%= @jsa.procedures_reviewed %></div>
+        <div class="col-md-4"><strong>Worst Case:</strong> <%= @jsa.worst_case %></div>
+        <div class="col-md-4"><strong>Special Tools/PPE:</strong> <%= @jsa.special_tools %></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3">
+  <!-- Potential Hazard Key -->
+  <div class="col-12">
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <h5 class="card-title border-bottom pb-2">Potential Hazard Key</h5>
+        <div class="row">
+          <% ['Abrasion/cut/penetration', 'Access/Egress', 'Body Position', 'Burn', 'Caught Between/Stuck',
+              'Close/Tight/Congested Area', 'Compression/Roll Over', 'Electrical/Shock/Explosive', 'Toxic Atmosphere',
+              'Footing/Open Hole/Flooring', 'Flying/Foreign Particles', 'Heavy/Bulky/Awkward', 'Impact from Falling Objects',
+              'Incline/Slope/Uneven', 'Inhalation', 'Kickback/Torque', 'Line of Fire', 'Moving Equipment', 'High Noise',
+              'Overexertion/Heat/Cold', 'Pinch Points', 'Rotating Equipment', 'Sharp Metal/Edges', 'Head Knocker',
+              'Slip-Trip-Fall', 'Splash/Spill', 'Strain/Sprain', 'Suspended/Swinging Load', 'Visibility/Lighting',
+              'Situational Awareness', 'Stored Energy', 'Unexpected Movement', 'Weather', 'Blast Zone', 'Engulfment']
+              .in_groups_of(3, false).each do |group| %>
+            <div class="col-md-3">
+              <% group.each do |hazard| %>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" <%= 'checked' if @jsa.potential_hazard_key.include?(hazard) %> disabled>
+                  <label class="form-check-label"><%= hazard %></label>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Required PPE -->
+  <div class="col-12">
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <h5 class="card-title border-bottom pb-2">Required PPE</h5>
+        <div class="row">
+          <% ['Hard Hat', 'Face Shield', 'Goggles', 'Safety Glasses', 'Ear Protection', 'Dust Mask', 'Chemical Mask',
+              'Long Sleeves', 'Fire Retardant Clothing', 'Leather Gloves', 'Chemical Resistant Gloves',
+              'Chemical Resistant Apron', 'Harness', 'Steel Toe Boots', 'Other']
+              .in_groups_of(5, false).each do |group| %>
+            <div class="col-md-4">
+              <% group.each do |ppe| %>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" <%= 'checked' if @jsa.required_ppe.include?(ppe) %> disabled>
+                  <label class="form-check-label"><%= ppe %></label>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Required Protection Key -->
+  <div class="col-12">
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <h5 class="card-title border-bottom pb-2">Required Protection Key</h5>
+        <div class="row">
+          <% ['Authorization to Work Permit', 'Barricade/Guard Rail/Protective Cover', 'Correct Tools for the Job',
+              'Cover floor grating to prevent Falling Objects', 'Fire Watch w/ Fire Extinguisher-Water Hose',
+              'Fire Retardant Clothing FRC', 'Full Body Harness', 'SDS', 'Overhead Falling Object Protection',
+              'Personal Hygiene: Hand Wash Station/Shower', 'Personal Monitor', 'Proper Posture',
+              'Safe Work Procedure', 'Respirator', 'Safety Signs/Tags/Caution Tape', 'Tool Lanyards', 'Cones',
+              'Water Station/Covered Break Area']
+              .in_groups_of(6, false).each do |group| %>
+            <div class="col-md-4">
+              <% group.each do |protection| %>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" <%= 'checked' if @jsa.required_protection_key.include?(protection) %> disabled>
+                  <label class="form-check-label"><%= protection %></label>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+ <!-- Safety Keys Section with Cards -->
+  <div class="row">
+    <div class="col-md-3">
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="card-title border-bottom pb-2">Body Part Key</h5>
+      <div class="row">
+        <% @jsa.body_part_key.in_groups_of((@jsa.body_part_key.size / 2.0).ceil, false).each do |group| %>
+          <div class="col-md-6">
+            <% group.each do |body_part| %>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" checked disabled>
+                <label class="form-check-label"><%= body_part %></label>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="col-md-3">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h5 class="card-title border-bottom pb-2">Training Required</h5>
+          <% @jsa.training_required.each do |training| %>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" checked disabled>
+              <label class="form-check-label"><%= training %></label>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h5 class="card-title border-bottom pb-2">Mobile Equipment</h5>
+          <% @jsa.mobile_equipment.each do |equipment| %>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" checked disabled>
+              <label class="form-check-label"><%= equipment %></label>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h5 class="card-title border-bottom pb-2">Other Inspections</h5>
+          <% @jsa.other_inspections.each do |inspection| %>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" checked disabled>
+              <label class="form-check-label"><%= inspection %></label>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Employee & Signature Section -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="card-title border-bottom pb-2">Employee & Signature Information</h5>
+      <div class="row">
+        <div class="col-md-3"><strong>Employee Name:</strong> <%= @jsa.employee_name %></div>
+        <div class="col-md-3"><strong>Initials:</strong> <%= @jsa.initials %></div>
+        <div class="col-md-3"><strong>Submission Date:</strong> <%= @jsa.submission_date %></div>
+        <div class="col-md-3"><strong>Submission Time:</strong> <%= @jsa.submission_time.strftime("%I:%M %p") if @jsa.submission_time.present? %></div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md-4"><strong>Foreman Signature:</strong> <%= @jsa.foreman_signature %></div>
+        <div class="col-md-4"><strong>Operations Signature:</strong> <%= @jsa.operations_signature %></div>
+        <div class="col-md-4"><strong>Safety Rep Signature:</strong> <%= @jsa.safety_rep_signature %></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="d-flex justify-content-between mt-4">
+    <%= link_to "Download PDF", pdf_jsa_path(@jsa), class: "btn btn-primary" %>
+    <%= link_to "Edit", edit_jsa_path(@jsa), class: "btn btn-warning" %>
+    <%= link_to "Back", jsas_path, class: "btn btn-secondary" %>
+    <%= button_to "Delete", jsa_path(@jsa), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+  </div>
+</div>

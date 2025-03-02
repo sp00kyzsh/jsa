@@ -1,0 +1,2 @@
+class Jsa < ApplicationRecord
+end
