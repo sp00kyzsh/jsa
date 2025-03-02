@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :employees
   resources :jsas do
     member do
       get :pdf

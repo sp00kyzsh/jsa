@@ -1,0 +1,33 @@
+<div class="container mt-4">
+  <h1 class="mb-3 text-center">Employee Profile</h1>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="card-title border-bottom pb-2">Employee Information</h5>
+      <p><strong>Name:</strong> <%= @employee.first_name %> <%= @employee.last_name %></p>
+      <p><strong>Hiring Date:</strong> <%= @employee.hiring_date %></p>
+      <p><strong>Job Title:</strong> <%= @employee.job_title %></p>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="card-title border-bottom pb-2">Employment Details</h5>
+      <p><strong>Status:</strong> <%= @employee.active ? "Active" : "Inactive" %></p>
+      <p><strong>Employment Type:</strong> <%= @employee.employment_status %></p>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="card-title border-bottom pb-2">Notes</h5>
+      <p><%= @employee.notes.presence || "No notes available." %></p>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <%= link_to "Edit", edit_employee_path(@employee), class: "btn btn-warning" %>
+    <%= link_to "Back", employees_path, class: "btn btn-secondary" %>
+    <%= button_to "Delete", @employee, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+  </div>
+</div>
