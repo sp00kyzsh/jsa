@@ -83,8 +83,10 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
+
   primary: &primary_production
     <<: *default
+    url: <%= ENV['DATABASE_URL'] %>
     database: work_app_production
     username: work_app
     password: <%= ENV["WORK_APP_DATABASE_PASSWORD"] %>
