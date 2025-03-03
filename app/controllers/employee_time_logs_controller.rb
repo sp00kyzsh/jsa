@@ -39,12 +39,22 @@ class EmployeeTimeLogsController < ApplicationController
   end
 
   def update
-    if @time_log.update(time_log_params)
+    @employee = Employee.find(params[:employee_id])
+    @time_log = @employee.employee_time_logs.find(params[:id])
+  
+    Rails.logger.info "Updating time log: #{@time_log.id}"
+    Rails.logger.info "Clock-in: #{params[:employee_time_log][:clock_in]}"
+    Rails.logger.info "Clock-out: #{params[:employee_time_log][:clock_out]}"
+  
+    begin
+      @time_log.update!(time_log_params)
       redirect_to employee_path(@employee), notice: "Time log updated successfully!"
-    else
-      render :edit, alert: "Error updating time log."
+    rescue => e
+      Rails.logger.error "Failed to update time log: #{e.message}"
+      redirect_to employee_path(@employee), alert: "Error updating time log: #{e.message}"
     end
   end
+  
 
   private
 
