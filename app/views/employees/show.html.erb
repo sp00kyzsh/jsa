@@ -31,6 +31,7 @@
     <table class="table">
       <thead class="table-light">
         <tr>
+          <th>Date</th>
           <th>Clock-In</th>
           <th>Clock-Out</th>
           <th>Duration (mins)</th>
@@ -40,6 +41,7 @@
       <tbody>
         <% @employee.employee_time_logs.each do |log| %>
           <tr>
+            <td><%= log.clock_in.strftime("%m-%d-%Y") %></td> <!-- ✅ New Date Column --></td>
             <td><%= log.clock_in.strftime("%I:%M %p") %></td>
             <td><%= log.clock_out ? log.clock_out.strftime("%I:%M %p") : "Still Clocked In" %></td>
             <td><%= log.duration || "Ongoing" %></td>

@@ -40,3 +40,39 @@ Jsa.destroy_all
 end
 
 puts "✅ Seeded 10 JSA records successfully!"
+
+require 'faker'
+
+# 🔴 Fix: Delete dependent records first
+EmployeeTimeLog.destroy_all # Delete all time logs first
+Employee.destroy_all # Then delete employees
+
+puts "Seeding employees and clock-in/out data..."
+
+# Create Employees
+10.times do
+  employee = Employee.create!(
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    hiring_date: Faker::Date.between(from: 3.years.ago, to: Date.today),
+    job_title: Faker::Job.title,
+    active: [true, false].sample,
+    employment_status: ["Part-Time", "Full-Time", "Temp"].sample
+  )
+
+  # Create random clock-in/clock-out logs for each employee
+  rand(5..10).times do
+    clock_in_time = Faker::Time.between(from: 5.days.ago, to: Time.current)
+    
+    # ✅ Fix: Ensure clock_out_time uses `.to_i` to convert `8.hours` to an integer
+    clock_out_time = [Faker::Time.between(from: clock_in_time, to: clock_in_time + 8.hours.to_i), nil].sample
+
+    employee.employee_time_logs.create!(
+      clock_in: clock_in_time,
+      clock_out: clock_out_time
+    )
+  end
+end
+
+puts "✅ Seeding complete!"
+
