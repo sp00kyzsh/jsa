@@ -28,30 +28,35 @@
   <div class="card shadow-sm mb-4">
   <div class="card-body">
     <h5 class="card-title border-bottom pb-2">Work History</h5>
-    <table class="table">
-      <thead class="table-light">
-        <tr>
-          <th>Date</th>
-          <th>Clock-In</th>
-          <th>Clock-Out</th>
-          <th>Duration (mins)</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @employee.employee_time_logs.each do |log| %>
-          <tr>
-            <td><%= log.clock_in.strftime("%m-%d-%Y") %></td> <!-- ✅ New Date Column --></td>
-            <td><%= log.clock_in.strftime("%I:%M %p") %></td>
-            <td><%= log.clock_out ? log.clock_out.strftime("%I:%M %p") : "Still Clocked In" %></td>
-            <td><%= log.duration || "Ongoing" %></td>
-            <td>
-              <%= link_to "Edit", edit_employee_employee_time_log_path(@employee, log), class: "btn btn-sm btn-warning" %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Clock In</th>
+      <th>Clock Out</th>
+      <th>Duration (Hours)</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @employee.employee_time_logs.each do |log| %>
+      <tr>
+        <td><%= log.clock_in.strftime("%Y-%m-%d") %></td>
+        <td><%= log.clock_in.strftime("%I:%M %p") %></td>
+        <td><%= log.clock_out.present? ? log.clock_out.strftime("%I:%M %p") : 'Still Clocked In' %></td>
+        <td>
+          <% if log.clock_out.present? %>
+            <%= ((log.clock_out - log.clock_in) / 3600.0).round(2) %> hrs
+          <% else %>
+            N/A
+          <% end %>
+        </td>
+        <td><%= link_to "Edit", edit_employee_employee_time_log_path(@employee, log), class: "btn btn-sm btn-warning" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
   </div>
 </div>
 

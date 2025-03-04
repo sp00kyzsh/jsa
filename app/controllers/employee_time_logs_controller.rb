@@ -54,6 +54,21 @@ class EmployeeTimeLogsController < ApplicationController
       redirect_to employee_path(@employee), alert: "Error updating time log: #{e.message}"
     end
   end
+
+  def calculate_total_hours(employee)
+    total_minutes = employee.employee_time_logs.where.not(clock_out: nil).sum do |log|
+      ((log.clock_out - log.clock_in) / 60.0) # Convert seconds to minutes
+    end
+    (total_minutes / 60.0).round(2) # Convert minutes to hours and round to 2 decimal places
+  end
+  
+  def calculate_hours_in_range(employee, start_date, end_date)
+    total_minutes = employee.employee_time_logs.where("clock_in >= ? AND clock_out <= ?", start_date, end_date)
+                      .where.not(clock_out: nil)
+                      .sum { |log| ((log.clock_out - log.clock_in) / 60.0) }
+    (total_minutes / 60.0).round(2)
+  end
+  
   
 
   private
