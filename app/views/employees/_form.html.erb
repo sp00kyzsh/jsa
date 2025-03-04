@@ -1,77 +1,77 @@
 <%= form_with(model: employee, local: true) do |form| %>
-  <div class="container mt-4">
+<div class="container mt-4">
 
-    <!-- Employee Information -->
-    <div class="card shadow-sm mb-4">
-      <div class="card-body">
-        <h5 class="card-title border-bottom pb-2">Employee Information</h5>
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <%= form.label :first_name, "First Name" %>
-            <%= form.text_field :first_name, class: "form-control" %>
-          </div>
-          <div class="col-md-6 mb-3">
-            <%= form.label :last_name, "Last Name" %>
-            <%= form.text_field :last_name, class: "form-control" %>
-          </div>
-        </div>
-        
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <%= form.label :hiring_date, "Hiring Date" %>
-            <%= form.date_field :hiring_date, class: "form-control" %>
-          </div>
-          <div class="col-md-6 mb-3">
-            <%= form.label :job_title, "Job Title" %>
-            <%= form.text_field :job_title, class: "form-control" %>
-          </div>
-        </div>
+<!-- Employee Information -->
+<div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <h5 class="card-title border-bottom pb-2">Employee Information</h5>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <%= form.label :first_name, "First Name" %>
+        <%= form.text_field :first_name, class: "form-control" %>
+      </div>
+      <div class="col-md-6 mb-3">
+        <%= form.label :last_name, "Last Name" %>
+        <%= form.text_field :last_name, class: "form-control" %>
       </div>
     </div>
 
-    <!-- Employment Details -->
-    <div class="card shadow-sm mb-4">
-      <div class="card-body">
-        <h5 class="card-title border-bottom pb-2">Employment Details</h5>
-        
-        <div class="row">
-          <!-- Active/Inactive/Terminated -->
-          <div class="col-md-6 mb-3">
-            <%= form.label :active, "Employment Status" %>
-            <%= form.select :active, [["Active", true], ["Inactive", false], ["Terminated", nil]], {}, class: "form-select" %>
-          </div>
-
-          <!-- Employment Type Checkboxes -->
-          <div class="col-md-6 mb-3">
-            <label>Employment Type</label>
-            <div class="form-check">
-              <%= form.radio_button :employment_status, "Full-Time", class: "form-check-input" %>
-              <%= form.label :employment_status_full_time, "Full-Time", class: "form-check-label" %>
-            </div>
-            <div class="form-check">
-              <%= form.radio_button :employment_status, "Part-Time", class: "form-check-input" %>
-              <%= form.label :employment_status_part_time, "Part-Time", class: "form-check-label" %>
-            </div>
-            <div class="form-check">
-              <%= form.radio_button :employment_status, "Temp", class: "form-check-input" %>
-              <%= form.label :employment_status_temp, "Temp", class: "form-check-label" %>
-            </div>
-          </div>
-        </div>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <%= form.label :hiring_date, "Hiring Date" %>
+        <%= form.date_field :hiring_date, class: "form-control" %>
       </div>
-    </div>
-
-    <!-- Notes -->
-    <div class="card shadow-sm mb-4">
-      <div class="card-body">
-        <h5 class="card-title border-bottom pb-2">Notes</h5>
-        <%= form.text_area :notes, class: "form-control", rows: 4 %>
+      <div class="col-md-6 mb-3">
+        <%= form.label :job_title, "Job Title" %>
+        <%= form.text_field :job_title, class: "form-control" %>
       </div>
-    </div>
-
-    <!-- Submit Button -->
-    <div class="mb-3">
-      <%= form.submit "Save Employee", class: "btn btn-primary" %>
     </div>
   </div>
+</div>
+
+<!-- Employment Details -->
+<div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <h5 class="card-title border-bottom pb-2">Employment Details</h5>
+
+    <div class="row">
+<!-- Active/Inactive/Terminated -->
+<div class="col-md-6 mb-3">
+  <%= form.label :active, "Employment Status" %>
+  <%= form.select :active, [["Active", true], ["Inactive", false], ["Terminated", nil]], {}, class: "form-select" %>
+</div>
+
+<!-- Employment Type Checkboxes -->
+<div class="col-md-6 mb-3">
+  <label>Employment Type</label>
+  <div class="form-check">
+    <%= form.radio_button :employment_status, "Full-Time", class: "form-check-input" %>
+    <%= form.label :employment_status_full_time, "Full-Time", class: "form-check-label" %>
+  </div>
+  <div class="form-check">
+    <%= form.radio_button :employment_status, "Part-Time", class: "form-check-input" %>
+    <%= form.label :employment_status_part_time, "Part-Time", class: "form-check-label" %>
+  </div>
+  <div class="form-check">
+    <%= form.radio_button :employment_status, "Temp", class: "form-check-input" %>
+    <%= form.label :employment_status_temp, "Temp", class: "form-check-label" %>
+  </div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Notes -->
+<div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <h5 class="card-title border-bottom pb-2">Notes</h5>
+    <%= form.text_area :notes, class: "form-control", rows: 4 %>
+  </div>
+</div>
+
+<!-- Submit Button -->
+<div class="mb-3">
+  <%= form.submit "Save Employee", class: "btn btn-primary" %>
+</div>
+</div>
 <% end %>

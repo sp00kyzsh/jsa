@@ -17,24 +17,23 @@
         </thead>
         <tbody>
           <% @employees.each do |employee| %>
-            <tr>
-              <td><%= employee.id %></td>
-              <td>
-                <%= link_to "#{employee.first_name} #{employee.last_name}", employee, class: "fw-bold text-decoration-none" %>
-              </td>
-              <td><%= employee.job_title %></td>
-              <td>
-                <%= employee.employee_time_logs.last&.clock_in&.strftime("%I:%M %p") || "Never" %>
-              </td>
-              <td>
-  <% if employee.employee_time_logs.where(clock_out: nil).exists? %>
-    <%= button_to "Clock Out", clock_out_employee_employee_time_log_path(employee, employee.employee_time_logs.where(clock_out: nil).last), method: :patch, class: "btn btn-sm btn-danger" %>
-  <% else %>
-    <%= button_to "Clock In", employee_employee_time_logs_path(employee), method: :post, class: "btn btn-sm btn-success" %>
-  <% end %>
-</td>
-
-            </tr>
+          <tr>
+            <td><%= employee.id %></td>
+            <td>
+              <%= link_to "#{employee.first_name} #{employee.last_name}", employee, class: "fw-bold text-decoration-none" %>
+            </td>
+            <td><%= employee.job_title %></td>
+            <td>
+              <%= employee.employee_time_logs.last&.clock_in&.strftime("%I:%M %p") || "Never" %>
+            </td>
+            <td>
+              <% if employee.employee_time_logs.where(clock_out: nil).exists? %>
+              <%= button_to "Clock Out", clock_out_employee_employee_time_log_path(employee, employee.employee_time_logs.where(clock_out: nil).last), method: :patch, class: "btn btn-sm btn-danger" %>
+              <% else %>
+              <%= button_to "Clock In", employee_employee_time_logs_path(employee), method: :post, class: "btn btn-sm btn-success" %>
+              <% end %>
+            </td>
+          </tr>
           <% end %>
         </tbody>
       </table>
