@@ -8,6 +8,15 @@ class EmployeesController < ApplicationController
 
   # GET /employees/1 or /employees/1.json
   def show
+    @total_hours = calculate_total_hours(@employee)
+    @ytd_hours = calculate_ytd_hours(@employee)
+    
+    # Date range filtering
+    if params[:start_date].present? && params[:end_date].present?
+      @filtered_hours = calculate_hours_in_range(@employee, params[:start_date], params[:end_date])
+    else
+      @filtered_hours = nil
+    end
   end
 
   # GET /employees/new
@@ -61,6 +70,25 @@ class EmployeesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_employee
       @employee = Employee.find(params.expect(:id))
+    end
+
+    def calculate_total_hours(employee)
+      employee.employee_time_logs.where.not(clock_out: nil).sum do |log|
+        ((log.clock_out - log.clock_in) / 3600.0).round(2)
+      end
+    end
+  
+    def calculate_ytd_hours(employee)
+      start_of_year = Time.current.beginning_of_year
+      employee.employee_time_logs.where("clock_in >= ?", start_of_year).where.not(clock_out: nil).sum do |log|
+        ((log.clock_out - log.clock_in) / 3600.0).round(2)
+      end
+    end
+  
+    def calculate_hours_in_range(employee, start_date, end_date)
+      employee.employee_time_logs.where(clock_in: start_date.to_date.beginning_of_day..end_date.to_date.end_of_day).where.not(clock_out: nil).sum do |log|
+        ((log.clock_out - log.clock_in) / 3600.0).round(2)
+      end
     end
 
     # Only allow a list of trusted parameters through.
