@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_02_115803) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_05_204901) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -78,6 +78,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_02_115803) do
     t.index ["employee_id"], name: "index_time_logs_on_employee_id"
   end
 
+  create_table "time_off_requests", force: :cascade do |t|
+    t.bigint "employee_id", null: false
+    t.date "start_date"
+    t.date "end_date"
+    t.text "note"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["employee_id"], name: "index_time_off_requests_on_employee_id"
+  end
+
   add_foreign_key "employee_time_logs", "employees"
   add_foreign_key "time_logs", "employees"
+  add_foreign_key "time_off_requests", "employees"
 end

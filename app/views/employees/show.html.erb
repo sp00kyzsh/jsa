@@ -25,6 +25,54 @@
     </div>
   </div>
 
+  <!-- ✅ Time-Off Requests Section -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="card-title border-bottom pb-2">Time-Off Requests</h5>
+
+      <div class="d-flex justify-content-end mb-3">
+        <%= link_to "Request Time Off", new_employee_time_off_request_path(@employee), class: "btn btn-primary" %>
+      </div>
+
+      <% if @employee.time_off_requests.any? %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Note</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @employee.time_off_requests.each do |request| %>
+              <tr>
+                <td><%= request.start_date %></td>
+                <td><%= request.end_date %></td>
+                <td><%= request.note.presence || "No details provided." %></td>
+                <td><strong><%= request.status.capitalize %></strong></td>
+                <td>
+                  <% if request.status == "pending" %>
+                    <%= link_to "Approve", employee_time_off_request_path(@employee, request, status: "approved"),
+                        method: :patch, data: { turbo_method: :patch }, class: "btn btn-sm btn-success" %>
+                    <%= link_to "Deny", employee_time_off_request_path(@employee, request, status: "denied"),
+                        method: :patch, data: { turbo_method: :patch }, class: "btn btn-sm btn-warning" %>
+                  <% end %>
+                  <%= link_to "Delete", employee_time_off_request_path(@employee, request),
+                      method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+                      class: "btn btn-sm btn-danger" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>No time-off requests found.</p>
+      <% end %>
+    </div>
+  </div>
+
   <div class="card shadow-sm mb-4">
     <div class="card-body">
       <h5 class="card-title border-bottom pb-2">Work History</h5>
@@ -40,26 +88,29 @@
         </thead>
         <tbody>
           <% @employee.employee_time_logs.each do |log| %>
-          <tr>
-            <td><%= log.clock_in.strftime("%Y-%m-%d") %></td>
-            <td><%= log.clock_in.strftime("%I:%M %p") %></td>
-            <td><%= log.clock_out.present? ? log.clock_out.strftime("%I:%M %p") : 'Still Clocked In' %></td>
-            <td>
-              <% if log.clock_out.present? %>
-              <%= ((log.clock_out - log.clock_in) / 3600.0).round(2) %> hrs
-              <% else %>
-              N/A
-              <% end %>
-            </td>
-            <td><%= link_to "Edit", edit_employee_employee_time_log_path(@employee, log), class: "btn btn-sm btn-warning" %></td>
-          </tr>
+            <tr>
+              <td><%= log.clock_in.strftime("%Y-%m-%d") %></td>
+              <td><%= log.clock_in.strftime("%I:%M %p") %></td>
+              <td><%= log.clock_out.present? ? log.clock_out.strftime("%I:%M %p") : 'Still Clocked In' %></td>
+              <td>
+                <% if log.clock_out.present? %>
+                  <%= ((log.clock_out - log.clock_in) / 3600.0).round(2) %> hrs
+                <% else %>
+                  N/A
+                <% end %>
+              </td>
+              <td>
+                <%= link_to "Edit", edit_employee_employee_time_log_path(@employee, log), class: "btn btn-sm btn-warning" %>
+                <%= link_to "Delete", employee_employee_time_log_path(@employee, log),
+                    method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+                    class: "btn btn-sm btn-danger" %>
+              </td>
+            </tr>
           <% end %>
         </tbody>
       </table>
-
     </div>
   </div>
-
 
   <div class="container mt-4">
     <h1 class="text-center"><%= @employee.first_name %> <%= @employee.last_name %></h1>
@@ -100,14 +151,9 @@
     </div>
   </div>
 
-
-
   <div class="d-flex justify-content-between">
     <%= link_to "Edit", edit_employee_path(@employee), class: "btn btn-warning" %>
     <%= link_to "Back", employees_path, class: "btn btn-secondary" %>
     <%= button_to "Delete", @employee, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
   </div>
 </div>
-
-
-

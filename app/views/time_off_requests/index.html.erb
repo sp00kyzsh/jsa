@@ -1,0 +1,121 @@
+<div class="container mt-4">
+  <h1 class="text-center">All Time-Off Requests</h1>
+
+  <!-- 🔹 Pending Requests -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="card-title border-bottom pb-2 text-danger">Pending Requests</h5>
+      
+      <% if @pending_requests.any? %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Note</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @pending_requests.each do |request| %>
+              <tr>
+                <td><%= link_to "#{request.employee.first_name} #{request.employee.last_name}", employee_path(request.employee) %></td>
+                <td><%= request.start_date %></td>
+                <td><%= request.end_date %></td>
+                <td><%= request.note.presence || "No details provided." %></td>
+                <td>
+                  <%= link_to "Approve", employee_time_off_request_path(request.employee, request, status: "approved"),
+                      method: :patch, data: { turbo_method: :patch }, class: "btn btn-sm btn-success" %>
+                  <%= link_to "Deny", employee_time_off_request_path(request.employee, request, status: "denied"),
+                      method: :patch, data: { turbo_method: :patch }, class: "btn btn-sm btn-warning" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>No pending requests.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- 🔹 Approved Requests -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="card-title border-bottom pb-2 text-success">Approved Requests</h5>
+      
+      <% if @approved_requests.any? %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Note</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @approved_requests.each do |request| %>
+              <tr>
+                <td><%= link_to "#{request.employee.first_name} #{request.employee.last_name}", employee_path(request.employee) %></td>
+                <td><%= request.start_date %></td>
+                <td><%= request.end_date %></td>
+                <td><%= request.note.presence || "No details provided." %></td>
+                <td>
+                  <%= link_to "Deny", employee_time_off_request_path(request.employee, request, status: "denied"),
+                      method: :patch, data: { turbo_method: :patch }, class: "btn btn-sm btn-warning" %>
+                  <%= link_to "Delete", employee_time_off_request_path(request.employee, request),
+                      method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+                      class: "btn btn-sm btn-danger" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>No approved requests.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Denied Requests -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="card-title border-bottom pb-2">Denied Requests</h5>
+      <% if @denied_requests.any? %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Note</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @denied_requests.each do |request| %>
+              <tr>
+                <td><%= link_to "#{request.employee.first_name} #{request.employee.last_name}", employee_path(request.employee) %></td>
+                <td><%= request.start_date %></td>
+                <td><%= request.end_date || request.start_date %></td>
+                <td><%= request.note %></td>
+                <td>
+                  <%= link_to "Approve", employee_time_off_request_path(request.employee, request, status: "approved"),
+                      method: :patch, data: { turbo_method: :patch }, class: "btn btn-sm btn-success" %>
+                  <%= link_to "Delete", employee_time_off_request_path(request.employee, request),
+                      method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+                      class: "btn btn-sm btn-danger" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>No denied requests.</p>
+      <% end %>
+    </div>
+  </div>
+</div>

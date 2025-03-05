@@ -1,6 +1,6 @@
 class EmployeeTimeLogsController < ApplicationController
   before_action :set_employee, only: [:create, :update, :edit, :clock_out] # Add clock_out
-  before_action :set_time_log, only: [:edit, :update, :clock_out] # Add clock_out
+  before_action :set_time_log, only: [:edit, :update, :clock_out, :destroy] # Add clock_out
   
   def clock_in_page
     @employees = Employee.all
@@ -52,6 +52,32 @@ class EmployeeTimeLogsController < ApplicationController
     rescue => e
       Rails.logger.error "Failed to update time log: #{e.message}"
       redirect_to employee_path(@employee), alert: "Error updating time log: #{e.message}"
+    end
+  end
+
+  def destroy
+    if @time_log.present?
+      @time_log.destroy
+      redirect_to employee_path(@employee), notice: "Time log deleted successfully."
+    else
+      redirect_to employee_path(@employee), alert: "Time log not found."
+    end
+  end
+
+  private
+
+  def set_employee
+    @employee = Employee.find_by(id: params[:employee_id]) # Use `find_by` to prevent errors
+    if @employee.nil?
+      redirect_to employees_path, alert: "Employee not found."
+    end
+  end
+
+  def set_time_log
+    if @employee
+      @time_log = @employee.employee_time_logs.find_by(id: params[:id])
+    else
+      redirect_to employees_path, alert: "Employee or Time Log not found."
     end
   end
   
